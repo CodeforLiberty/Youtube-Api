@@ -14,8 +14,13 @@ var params = {
 }
 
 
-$('.sub').on('click', function() {
+function newQuery(query) {//change query to what's in the input
+	params.q= $("#query").val(); 
+	
+};
 
+$('.sub').on('click', function() {
+	newQuery();
 	$.getJSON(url, params, function(response){
 
 		console.log("Request successful", response)
@@ -27,11 +32,24 @@ $('.sub').on('click', function() {
 // Display Function
 
 function renderSearchResults(response) {
+	var response = response;
 	var picturesHTML = '';
 	for (var i = 0; i < response.items.length; i++) {
 	picturesHTML += `<img src='${response.items[i].snippet.thumbnails.medium.url}'</br>`;
+	
 	}
+	var videoId = response.items[0].id.videoId;
+	$('#search-container').on('click', 'img',  function() {
+		$('img').append(`<iframe src='https://www.youtube.com/watch?v=${videoId}'>`)
+		console.log(response.items[0].id.videoId);
+
+		
+	})
+	
+
 	$('#search-container').html(picturesHTML);
+
+
 }
 
 
