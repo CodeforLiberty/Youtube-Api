@@ -19,8 +19,21 @@ $('.sub').on('click', function() {
 	$.getJSON(url, params, function(response){
 
 		console.log("Request successful", response)
-	}
+		renderSearchResults(response);
+	})
 });
+
+
+// Display Function
+
+function renderSearchResults(response) {
+	var picturesHTML = '';
+	for (var i = 0; i < response.items.length; i++) {
+	picturesHTML += `<img src='${response.items[i].snippet.thumbnails.medium.url}'</br>`;
+	}
+	$('#search-container').html(picturesHTML);
+}
+
 
 
 
